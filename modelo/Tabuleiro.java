@@ -77,34 +77,38 @@ public class Tabuleiro {
 	}
 	
 	// REINICIAR JOGO
-	public void reiniciar() {
-		campos.stream().forEach(c -> c.reiniciarJogo());
-		sortearMinas();		
-	}
+//	public void reiniciar() {
+//		campos.stream().forEach(c -> c.reiniciarJogo());
+//		sortearMinas();		
+//	}
 	
-	// EXIBIR O TABULEIRO
+	// EXIBIR O TABULEIRO FOI NA TENTATIVA E ERRO
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		int i = 0;
+		// CONTRU플O DAS COLUNAS
 		sb.append("\n");
-		sb.append("     ");
+		sb.append("      ");
+		// NUMERA플O DA COLUNA
 		for(int c = 1; c <= colunas; c++) {
-			sb.append(" ");
-			sb.append(c);
-			sb.append(" ");
+			String printColuna = String.format("%02d", c);
+			sb.append("");
+			sb.append(printColuna);
+			sb.append(" ");			
 		}
 		sb.append("\n");
+		// BARRAS INFERIORES DAS COLUNAS
 		for(int c = 1; c<= colunas; c++) {
 			sb.append("___");
 		}
-		sb.append("_____");
-		
-		
-		int i = 0;
+		sb.append("_____");		
 		sb.append("\n");
-		
+		// CONSTRU플O DAS LINHAS
 		for(int l = 1; l <= linhas; l++) {
+			String printLinha = String.format("%02d", l);
+			// NUMERA플O DAS LINHAS
 			sb.append(" ");
-			sb.append(l + " |");
+			sb.append(printLinha + "|");
 			sb.append(" ");
 			for(int c = 1; c <= colunas; c++) {				
 				sb.append(" ");

@@ -87,11 +87,7 @@ public class Campo {
 		
 	}
 	
-	void reiniciarJogo() {
-		aberto = false;
-		marcado = false;
-		minado = false;		
-	}	
+
 
 
 	// GETTERS AND SETTERS

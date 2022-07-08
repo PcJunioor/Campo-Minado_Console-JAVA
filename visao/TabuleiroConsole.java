@@ -5,13 +5,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import pcjunior.cm.Aplicacao;
 import pcjunior.cm.excecao.ExplosaoException;
-import pcjunior.cm.excecao.SairException;
 import pcjunior.cm.modelo.Tabuleiro;
 
 public class TabuleiroConsole {
 	private Tabuleiro tabuleiro;
 	private Scanner entrada = new Scanner(System.in);
+	
 	
 	public TabuleiroConsole(Tabuleiro tabuleiro) {
 		this.tabuleiro = tabuleiro; 
@@ -19,32 +20,26 @@ public class TabuleiroConsole {
 	}
 
 	private void executarJogo() {
-		try {
-			boolean controle = true;
+
+			cicloDoJogo();
+			System.out.println("Jogar novamente? (S/n)");
+			String resposta = entrada.nextLine();
 			
-			while(controle) {
-				cicloDoJogo();
-				System.out.println("Jogar novamente? (S/n)");
-				String resposta = entrada.nextLine();
-				if(resposta.equalsIgnoreCase("n")) {
-					controle = false;
-					System.out.println("Saindo...");
-				} else {
-					tabuleiro.reiniciar();
-				}				
-			}			
-		} catch(SairException e) {
-			System.out.println("Saindo...");
-		} finally {
-			entrada.close();
-		}
-		
+			if(resposta.equalsIgnoreCase("n")) {				
+				System.out.println("Saindo...");
+				// ENCERRA A APLICAÇÃO
+				System.exit(0);
+			} else {
+				// REINICIA A APLICAÇÃO
+				Aplicacao.main(null);					
+			}									
+		entrada.close();
 	}
 
+	//  CICLO DO FUNCIONAMENTO DO JOGO - SO ACABA COM OBJETIVO ALANÇADO
+	//  EXPLOSAOEXCEPTION OU DIGITAR "SAIR"
 	private void cicloDoJogo() {
 		try {
-			// CICLO DO FUNCIONAMENTO DO JOGO - SO ACABA COM OBJETIVO ALANÇADO
-			// OU SAIREXCEPTION  OU EXPLOSAOEXCEPTION
 			while (!tabuleiro.objetivoAlcancado()) {
 				System.out.println(tabuleiro);
 				String digitado = capturarValorDigitado("Digite (x,y): ");
@@ -70,35 +65,28 @@ public class TabuleiroConsole {
 						
 					} catch (NumberFormatException e) {
 						System.out.println("Digite um campo válido!");
-					}
+					} 
 				}				
-			}
-			// OBJETIVO ALCANÇADO
+			}			
+			// OBJETIVO FOI ALCANÇADO
 			System.out.println(tabuleiro);
-			System.out.println("PARABÉNS! FIM DE JOGO!!");
+			System.out.println("PARABÉNS! VITÓRIA!!");
+			// CAPTURA A EXPLOSAOEXCEPTION
 		} catch (ExplosaoException e) {
 			System.out.println(tabuleiro);
-			System.out.println("FIM DE JOGO!!");
-		}
-		
+			System.out.println("BOOOM!!! FIM DE JOGO!!");
+		}		
 	}
-	
 	private String capturarValorDigitado(String texto) {
 		// IMPRIME A INTERAÇÃO DE COMANDO COM USUÁRIO
 		System.out.print(texto);
 		String digitado = entrada.nextLine();
 		// SAIR DO JOGO 
 		if("sair".equalsIgnoreCase(digitado)) {				
-			throw new SairException();
+			System.out.println("Saindo...");
+			System.exit(0);			
 		}		
 		return digitado;		
-	}
-	
-	
-	
+	}	
 	
 }
-	
-	
-
-
